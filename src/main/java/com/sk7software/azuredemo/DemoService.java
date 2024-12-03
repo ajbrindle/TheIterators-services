@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +61,9 @@ public class DemoService {
     }
 
     @GetMapping("/journey/{id}")
-    public List<JourneyStep> getSteps(@PathVariable String id) {
-        return (List<JourneyStep>)sessionData.getSessionData(id).get("steps");
+    public Map<String, List<JourneyStep>> getSteps(@PathVariable String id) {
+        Map<String, List<JourneyStep>> steps = new HashMap<>();
+        steps.put("view-pin", (List<JourneyStep>)sessionData.getSessionData(id).get("steps"));
+        return steps;
     }
 }

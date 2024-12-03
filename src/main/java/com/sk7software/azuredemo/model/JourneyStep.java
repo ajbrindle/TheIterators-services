@@ -10,7 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JourneyStep {
-    private String screenId;
-    private String elementId;
-    private String text;
+    private String target;
+    private String placement;
+    private String content;
+    private boolean disableBeacon;
 }

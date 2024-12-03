@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,4 +16,10 @@ public class SessionStatus {
     private int wid;
     private int ht;
     private String lastAction;
+    private String name;
+    private String deviceName;
+    private String appVersion;
+    private String os;
+    private String loginDt;
+    private String updateDt;
 }
