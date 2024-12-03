@@ -1,5 +1,6 @@
 package com.sk7software.azuredemo;
 
+import com.sk7software.azuredemo.model.JourneyStep;
 import com.sk7software.azuredemo.model.SessionStatus;
 import com.sk7software.azuredemo.model.UpdateInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -48,5 +50,17 @@ public class DemoService {
             @RequestBody UpdateInfo info) {
         sessionData.addSessionData(id, info.getKey(), info.getValue());
         return 0;
+    }
+
+    @PostMapping("/journey/{id}")
+    public Integer postJourneySteps(@PathVariable String id,
+                                    @RequestBody List<JourneyStep> steps) {
+        sessionData.addSessionData(id, "steps", steps);
+        return 0;
+    }
+
+    @GetMapping("/journey/{id}")
+    public List<JourneyStep> getSteps(@PathVariable String id) {
+        return (List<JourneyStep>)sessionData.getSessionData(id).get("steps");
     }
 }
