@@ -4,6 +4,9 @@ import com.sk7software.azuredemo.model.JourneyStep;
 import com.sk7software.azuredemo.model.SessionStatus;
 import com.sk7software.azuredemo.model.UpdateInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,9 +64,11 @@ public class DemoService {
     }
 
     @GetMapping("/journey/{id}")
-    public Map<String, List<JourneyStep>> getSteps(@PathVariable String id) {
+    public ResponseEntity<Map<String, List<JourneyStep>>> getSteps(@PathVariable String id) {
         Map<String, List<JourneyStep>> steps = new HashMap<>();
         steps.put("view-pin", (List<JourneyStep>)sessionData.getSessionData(id).get("steps"));
-        return steps;
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setAccessControlAllowOrigin("*");
+        return new ResponseEntity<Map<String, List<JourneyStep>>>(steps, responseHeaders, HttpStatus.OK);
     }
 }
