@@ -26,12 +26,12 @@ public class DemoService {
     }
 
     @GetMapping("/name/{name}")
-    public String getName(@PathVariable String name) {
-        return "Hello " + name;
+    public ResponseEntity<String> getName(@PathVariable String name) {
+        return new ResponseEntity<String>("Hello " + name, corsHeader(), HttpStatus.OK);
     }
 
     @PostMapping("/notify/{id}")
-    public String postStatus(@PathVariable String id,
+    public ResponseEntity<String> postStatus(@PathVariable String id,
                               @RequestBody SessionStatus status) {
         System.out.println("User: " + id);
         System.out.println("Screen: " + status.getScreenId());
@@ -41,7 +41,7 @@ public class DemoService {
         sessionData.addSessionData(id, "screenWid", status.getWid());
         sessionData.addSessionData(id, "screenHt", status.getHt());
         sessionData.addSessionData(id, "lastAction", status.getLastAction());
-        return id;
+        return new ResponseEntity<String>(id, corsHeader(), HttpStatus.CREATED);
     }
 
     @GetMapping("/status/{id}")
@@ -50,17 +50,17 @@ public class DemoService {
     }
 
     @PutMapping("/update/{id}")
-    public Integer putUpdate(@PathVariable String id,
+    public ResponseEntity<Integer> putUpdate(@PathVariable String id,
             @RequestBody UpdateInfo info) {
         sessionData.addSessionData(id, info.getKey(), info.getValue());
-        return 0;
+        return new ResponseEntity<Integer>(0, corsHeader(), HttpStatus.CREATED);
     }
 
     @PostMapping("/journey/{id}")
-    public Integer postJourneySteps(@PathVariable String id,
+    public ResponseEntity<Integer> postJourneySteps(@PathVariable String id,
                                     @RequestBody List<JourneyStep> steps) {
         sessionData.addSessionData(id, "steps", steps);
-        return 0;
+        return new ResponseEntity<Integer>(0, corsHeader(), HttpStatus.CREATED);
     }
 
     @GetMapping("/journey/{id}")
