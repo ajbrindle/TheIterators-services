@@ -45,8 +45,8 @@ public class DemoService {
     }
 
     @GetMapping("/status/{id}")
-    public Map<String, Object> getStatus(@PathVariable String id) {
-        return sessionData.getSessionData(id);
+    public ResponseEntity<Map<String, Object>> getStatus(@PathVariable String id) {
+        return new ResponseEntity<Map<String, Object>>(sessionData.getSessionData(id), corsHeader(), HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
@@ -67,8 +67,13 @@ public class DemoService {
     public ResponseEntity<Map<String, List<JourneyStep>>> getSteps(@PathVariable String id) {
         Map<String, List<JourneyStep>> steps = new HashMap<>();
         steps.put("view-pin", (List<JourneyStep>)sessionData.getSessionData(id).get("steps"));
+        return new ResponseEntity<Map<String, List<JourneyStep>>>(steps, corsHeader(), HttpStatus.OK);
+    }
+
+    private HttpHeaders corsHeader() {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setAccessControlAllowOrigin("*");
-        return new ResponseEntity<Map<String, List<JourneyStep>>>(steps, responseHeaders, HttpStatus.OK);
+        return responseHeaders;
+
     }
 }
