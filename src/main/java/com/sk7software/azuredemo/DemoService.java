@@ -5,12 +5,14 @@ import com.sk7software.azuredemo.model.SessionStatus;
 import com.sk7software.azuredemo.model.UpdateInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +75,12 @@ public class DemoService {
     private HttpHeaders corsHeader() {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setAccessControlAllowOrigin("*");
+        List<HttpMethod> methods = new ArrayList<>();
+        methods.add(HttpMethod.GET);
+        methods.add(HttpMethod.POST);
+        methods.add(HttpMethod.PUT);
+        methods.add(HttpMethod.OPTIONS);
+        responseHeaders.setAccessControlAllowMethods(methods);
         return responseHeaders;
-
     }
 }
