@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class DemoService {
@@ -81,6 +78,8 @@ public class DemoService {
         methods.add(HttpMethod.PUT);
         methods.add(HttpMethod.OPTIONS);
         responseHeaders.setAccessControlAllowMethods(methods);
+        responseHeaders.setAccessControlAllowHeaders(Arrays.asList("Content-Type", "Authorization"));
+        responseHeaders.setAccessControlAllowCredentials(true);
         return responseHeaders;
     }
 }
